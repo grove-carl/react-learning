@@ -25,7 +25,6 @@ const App = () => {
     },
   ];
 
-
   return (
     <div>
       <h2>Let's get started!</h2>
@@ -34,6 +33,6 @@ const App = () => {
       </div>
     </div>
   );
-}
+};
 
 export default App;
