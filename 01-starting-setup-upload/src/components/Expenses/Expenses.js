@@ -9,9 +9,12 @@ import "./Expenses.css";
 const Expenses = (props) => {
   const [userPickedYear, setUserPickedYear] = useState("2020");
 
+  const filteredExpenseItems = props.expenses.filter(
+    (expense) => expense.date.getFullYear().toString() === userPickedYear
+  );
+
   const userPickHandler = (year) => {
     setUserPickedYear(year);
-    console.log(year);
   };
 
   return (
@@ -21,14 +24,18 @@ const Expenses = (props) => {
           pickedYear={userPickedYear}
           onPicked={userPickHandler}
         />
-        {props.expenses.map((expense) => (
-          <ExpenseItem
-            key={expense.id}
-            title={expense.title}
-            amount={expense.amount}
-            date={expense.date}
-          />
-        ))}
+        {filteredExpenseItems.length === 0 ? (
+          <p>No content was found.</p>
+        ) : (
+          filteredExpenseItems.map((expense) => (
+            <ExpenseItem
+              key={expense.id}
+              title={expense.title}
+              amount={expense.amount}
+              date={expense.date}
+            />
+          ))
+        )}
       </Card>
     </div>
   );
