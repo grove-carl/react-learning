@@ -1,6 +1,6 @@
-import ExpenseItem from "./ExpenseItem";
 import Card from "../UI/Card";
 import ExpensesFilter from "./ExpensesFilter";
+import ExpensesList from "./ExpensesList";
 
 import { useState } from "react";
 
@@ -19,24 +19,15 @@ const Expenses = (props) => {
 
   return (
     <div>
-      <Card className="expenses">
-        <ExpensesFilter
-          pickedYear={userPickedYear}
-          onPicked={userPickHandler}
-        />
-        {filteredExpenseItems.length === 0 ? (
-          <p>No content was found.</p>
-        ) : (
-          filteredExpenseItems.map((expense) => (
-            <ExpenseItem
-              key={expense.id}
-              title={expense.title}
-              amount={expense.amount}
-              date={expense.date}
-            />
-          ))
-        )}
-      </Card>
+      <li>
+        <Card className="expenses">
+          <ExpensesFilter
+            pickedYear={userPickedYear}
+            onPicked={userPickHandler}
+          />
+          <ExpensesList filteredExpenseItems={filteredExpenseItems} />
+        </Card>
+      </li>
     </div>
   );
 };
