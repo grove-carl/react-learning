@@ -1,3 +1,3 @@
-01-starting-setup-upload/node_modules
-01-starting-setup-upload/.eslintcache
-01-starting-setup-upload/package-lock.json
+*/node_modules
+*/.eslintcache
+*/package-lock.json
