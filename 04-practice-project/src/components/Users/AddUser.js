@@ -4,13 +4,14 @@ import { useState } from "react";
 
 import styles from "./AddUser.module.css";
 
-const AddUser = () => {
+const AddUser = (props) => {
   const [username, setUsername] = useState("");
   const [age, setAge] = useState("");
 
   const addUserHandler = (event) => {
     event.preventDefault();
     validInputFields();
+    props.onAddUser({ key: generateKey(), username: username, age: age });
     resetInputFields();
   };
 
@@ -18,6 +19,10 @@ const AddUser = () => {
     if (username.trim().length === 0 || age.trim().length === 0 || +age < 1) {
       return;
     }
+  };
+
+  const generateKey = () => {
+    return username + age + Math.random();
   };
 
   const resetInputFields = () => {
