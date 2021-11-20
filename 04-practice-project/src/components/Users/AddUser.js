@@ -9,19 +9,32 @@ const AddUser = (props) => {
   const [username, setUsername] = useState("");
   const [age, setAge] = useState("");
   const [isErrorModalShown, setIsErrorModalShown] = useState(false);
+  const [errorTitle, setErrorTitle] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const addUserHandler = (event) => {
     event.preventDefault();
-    if (isInputFieldsValid()) {
+    const isInputValid = validInputFields();
+    if (isInputValid) {
       props.onAddUser({ key: generateKey(), username: username, age: age });
       resetInputFields();
-    } else {
-      showErrorModal();
     }
   };
 
-  const isInputFieldsValid = () => {
-    return !(username.trim().length === 0 || age.trim().length === 0 || +age < 1);
+  const validInputFields = () => {
+    if (username.trim().length === 0 || age.trim().length === 0) {
+      setErrorTitle("Invalid input");
+      setErrorMessage("Please enter a valid name and age (non-empty values).");
+      showErrorModal();
+      return false;
+    } else if (+age < 1) {
+      setErrorTitle("Invalid input");
+      setErrorMessage("Please enter a valid age (>0).");
+      showErrorModal();
+      return false;
+    } else {
+      return true;
+    }
   };
 
   const generateKey = () => {
@@ -52,8 +65,8 @@ const AddUser = (props) => {
   return (
     <div>
       <ErrorModal
-        title="title"
-        message="message"
+        title={errorTitle}
+        message={errorMessage}
         isShown={isErrorModalShown}
         onClickButton={hideErrorModal}
       />
