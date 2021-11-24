@@ -23,8 +23,9 @@ const passwordReducer = (state, action) => {
   }
   if (action.type === "INPUT_BLUR") {
     return {
-      value: state.value, isValid: state.isValid
-    }
+      value: state.value,
+      isValid: state.value.trim().length > 6,
+    };
   }
   return { value: "", isValid: false };
 };
@@ -35,7 +36,7 @@ const Login = (props) => {
     isValid: undefined,
   });
 
-  const [passwordState, passwordDispatcher] = useReducer(passwordReducer, {
+  const [passwordState, passwordStateDispatcher] = useReducer(passwordReducer, {
     value: "",
     isValid: undefined,
   });
@@ -78,7 +79,10 @@ const Login = (props) => {
 
   const passwordChangeHandler = (event) => {
     // setEnteredPassword(event.target.value);
-    passwordDispatcher({ type: "USER_INPUT", password: event.target.value });
+    passwordStateDispatcher({
+      type: "USER_INPUT",
+      password: event.target.value,
+    });
 
     setFormIsValid(
       emailState.value.includes("@") && event.target.value.trim().length > 6
@@ -92,7 +96,7 @@ const Login = (props) => {
 
   const validatePasswordHandler = () => {
     // setPasswordIsValid(enteredPassword.trim().length > 6);
-    passwordStateDispatcher({ type: "USER_INPUT" });
+    passwordStateDispatcher({ type: "INPUT_BLUR" });
   };
 
   const submitHandler = (event) => {
